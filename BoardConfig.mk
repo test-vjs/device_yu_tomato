@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+DEVICE_PATH := device/yu/tomato
+
 include device/cyanogen/msm8916-common/BoardConfigCommon.mk
 
 include device/yu/tomato/board/*.mk
@@ -24,7 +26,7 @@ TARGET_COMPILE_WITH_MSM_KERNEL := true
 TARGET_USES_QCOM_MM_AUDIO := true
 
 # Assertions
-TARGET_BOARD_INFO_FILE := device/yu/tomato/board-info.txt
+TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
 
 # Audio
 AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
@@ -35,7 +37,7 @@ AUDIO_FEATURE_ENABLED_NEW_SAMPLE_RATE := true
 AUDIO_FEATURE_ENABLED_KPI_OPTIMIZE := true
 
 # Bluetooth
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/yu/tomato/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
 
 # Camera
 BOARD_CAMERA_SENSORS := imx135_cp8675 imx214_cp8675 ov5648_cp8675
@@ -69,13 +71,13 @@ TARGET_NO_RPC := true
 USE_DEVICE_SPECIFIC_GPS := true
 
 # Properties
-TARGET_SYSTEM_PROP += device/yu/tomato/system.prop
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
 # HIDL
-DEVICE_MANIFEST_FILE := device/yu/tomato/manifest.xml
+DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 
 # Init
-TARGET_LIBINIT_MSM8916_DEFINES_FILE := device/yu/tomato/init/init_tomato.cpp
+TARGET_LIBINIT_MSM8916_DEFINES_FILE := $(DEVICE_PATH)/init/init_tomato.cpp
 
 
 QCOM_HARDWARE_VARIANT := msm8916
@@ -97,6 +99,14 @@ TARGET_LD_SHIM_LIBS += \
     /system/vendor/lib64/lib-imscamera.so|libshims_camera.so \
     /system/vendor/lib64/lib-imsvt.so|libshims_ims.so \
 
+# LineageHW
+JAVA_SOURCE_OVERLAYS := org.lineageos.hardware|$(DEVICE_PATH)/lineagehw|**/*.java
+
+# Media
+TARGET_USES_MEDIA_EXTENSIONS := true
+
+# PowerHAL
+TARGET_POWER_SET_FEATURE_LIB := libpower_set_feature_tomato
 
 TARGET_QCOM_WLAN_VARIANT := wlan-caf
 # Power
@@ -118,7 +128,7 @@ PRODUCT_BOOT_JARS += telephony-ext
 TARGET_DESTROYED_MUTEX_USAGE_WHITELIST := mm-qcamera-daemon
 # Recovery
 TARGET_RECOVERY_DENSITY := xhdpi
-TARGET_RECOVERY_FSTAB := device/yu/tomato/rootdir/etc/fstab.qcom
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
 TARGET_RECOVERY_PIXEL_FORMAT := ABGR_8888
 
 # Inherit from proprietary files
